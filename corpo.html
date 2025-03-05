@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central do Assinante Tracecom</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+        #menu-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+        .logo {
+            height: 40px;
+        }
+        .container, .lamina {
+            background: white;
+            margin: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #003366;
+            margin-bottom: 10px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #003366;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0055aa;
+        }
+        .lamina:nth-child(odd) {
+            background-color: #e0f7fa;
+        }
+        .lamina:nth-child(even) {
+            background-color: #bbdefb;
+        }
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+        }
+        .carousel img {
+            height: 100px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu">
+            <button id="menu-btn">☰</button>
+            <div class="dropdown-menu hidden">
+                <button id="meus-dados-btn">Meus Dados</button>
+                <button id="logout-btn">Logout</button>
+            </div>
+            <span id="nome-titular">Nome do Titular</span>
+        </div>
+        <img src="logo-tracecom.png" alt="Logo Tracecom" class="logo">
+    </header>
+    <main>
+        <section id="meus-dados" class="container hidden">
+            <h2>Meus Dados</h2>
+            <label>Nome Completo:</label>
+            <input type="text" id="nome-completo">
+            <label>Endereço:</label>
+            <input type="text" id="endereco">
+            <label>Login:</label>
+            <input type="text" id="user-login">
+            <label>Senha:</label>
+            <input type="password" id="user-senha">
+            <button id="salvar-dados">Salvar</button>
+        </section>
+        <section id="faturas" class="lamina">
+            <h2>Faturas</h2>
+            <p>Status: <span id="status-fatura">Aguardando dados...</span></p>
+            <p>Valor: <span id="valor-fatura">---</span></p>
+            <p>Vencimento: <span id="vencimento-fatura">---</span></p>
+        </section>
+        <section id="contrato" class="lamina">
+            <h2>Contrato</h2>
+            <p>Plano: <span id="plano-venda">---</span></p>
+            <p>Status: <span id="status-acesso">---</span></p>
+        </section>
+        <section id="roteador" class="lamina">
+            <h2>Roteador</h2>
+            <button id="reset-roteador">Reiniciar Roteador</button>
+            <p>Consumo: <span id="consumo-internet">---</span></p>
+        </section>
+        <section id="comercial" class="lamina">
+            <h2>Comercial</h2>
+            <div class="carousel">
+                <img src="app1.png" alt="App 1">
+                <img src="app2.png" alt="App 2">
+            </div>
+        </section>
+    </main>
+    <script>
+        // Simulação de login autenticado
+        let usuarioAutenticado = true;
+    
+        // Função para verificar autenticação e exibir as seções corretamente
+        function verificarAutenticacao() {
+            if (usuarioAutenticado) {
+                document.getElementById("meus-dados").classList.remove("hidden");
+            } else {
+                document.getElementById("meus-dados").classList.add("hidden");
+            }
+        }
+    
+        // Menu suspenso ao clicar no botão de menu
+        document.getElementById("menu-btn").addEventListener("click", function () {
+            document.querySelector(".dropdown-menu").classList.toggle("hidden");
+        });
+    
+        // Mostrar seção "Meus Dados" ao clicar no botão correspondente
+        document.getElementById("meus-dados-btn").addEventListener("click", function () {
+            document.getElementById("meus-dados").classList.toggle("hidden");
+        });
+    
+        // Função de logout
+        function logout() {
+            usuarioAutenticado = false;
+            alert("Você saiu da conta.");
+            window.location.href = "index.html";
+        }
+    
+        // Event listener para botões de logout
+        document.getElementById("logout-btn").addEventListener("click", logout);
+        document.getElementById("logout-btn-sec").addEventListener("click", logout);
+    
+        // Simulação de fatura disponível
+        let faturaDisponivel = true;
+        if (faturaDisponivel) {
+            let botaoDownload = document.getElementById("download-fatura");
+            botaoDownload.classList.remove("hidden");
+            botaoDownload.addEventListener("click", function () {
+                window.location.href = "fatura.pdf"; // Link do PDF da fatura
+            });
+        }
+    
+        verificarAutenticacao();
+    </script>
+</body>
+</html>
